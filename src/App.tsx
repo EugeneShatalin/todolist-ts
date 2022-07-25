@@ -14,7 +14,7 @@ export type TodolistType = {
     filter: string
 }
 
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: Array<TasksType>
 }
 
@@ -62,11 +62,12 @@ function App() {
         setTasksObj({...tasksObj});
     }
 
-    function changeFilter(value: FilterValuesType, todolistId: string) {
-        let todolist = todolists.find(tl => tl.id === todolistId);
-        if (todolist) {
-            todolist.filter = value;
-            setTodolists([...todolists])
+    function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
+        let todolistTasks = tasksObj[todolistId];
+        let task = todolistTasks.find(t => t.id === id);
+        if (task) {
+            task.title = newTitle;
+            setTasksObj({...tasksObj});
         }
     }
 
@@ -78,6 +79,7 @@ function App() {
             setTasksObj({...tasksObj});
         }
     }
+
 
     function removeTodolist(id: string) {
         setTodolists(todolists.filter(tl => tl.id !== id));
@@ -99,12 +101,11 @@ function App() {
         })
     }
 
-    function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        let todolistTasks = tasksObj[todolistId];
-        let task = todolistTasks.find(t => t.id === id);
-        if (task) {
-            task.title = newTitle;
-            setTasksObj({...tasksObj});
+    function changeFilter(value: FilterValuesType, todolistId: string) {
+        let todolist = todolists.find(tl => tl.id === todolistId);
+        if (todolist) {
+            todolist.filter = value;
+            setTodolists([...todolists])
         }
     }
 
